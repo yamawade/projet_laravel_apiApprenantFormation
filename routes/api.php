@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\FormationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,8 @@ use App\Http\Controllers\Api\UserController;
 
 Route::post('register',[UserController::class,'register']);
 Route::post('login',[UserController::class,'login']);
+
+//ADMIN
+Route::post('formation/create',[FormationController::class,'store']);
+Route::post('formation/update/{id}',[FormationController::class,'update']);
+Route::delete('formation/{id}',[FormationController::class,'destroy']);

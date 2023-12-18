@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Models\Formation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class FormationController extends Controller
 {
@@ -28,7 +30,22 @@ class FormationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $formation = new Formation();
+            $formation->nom_formation=$request->nom_formation;
+            $formation->description=$request->description;
+            $formation->duree=$request->duree;
+            if($formation->save()){
+                return response()->json([
+                    'status_code'=>200,
+                    'status_message'=>'La formation a ete ajouté',
+                    'data'=>$formation
+                ]);
+            }
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+
     }
 
     /**
@@ -50,16 +67,41 @@ class FormationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        try{
+            $formation = Formation::FindorFail($id);
+            $formation->nom_formation=$request->nom_formation;
+            $formation->description=$request->description;
+            $formation->duree=$request->duree;
+            if($formation->update()){
+                return response()->json([
+                    'status_code'=>200,
+                    'status_message'=>'La formation a ete modifier',
+                    'data'=>$formation
+                ]);
+            }
+        }catch(Exception $e){
+            return response()->json($e);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try{
+            $formation = Formation::FindorFail($id);
+            if($formation->delete()){
+                return response()->json([
+                    'status_code'=>200,
+                    'status_message'=>'La formation a ete supprimer',
+                    'data'=>$formation
+                ]);
+            }
+        }catch(Exception $e){
+            return response()->json($e);
+        }
     }
 }

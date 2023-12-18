@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom_formation');
             $table->text('description');
-            $table->date('duree');
+            $table->integer('duree');
             $table->enum('statut',['en_attente','en_cours','terminer'])->default('en_attente');
             $table->timestamps();
         });
