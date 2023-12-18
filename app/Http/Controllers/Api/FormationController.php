@@ -14,7 +14,12 @@ class FormationController extends Controller
      */
     public function index()
     {
-        //
+        $formation = Formation::all();
+        return response()->json([
+            'status_code'=>200,
+            'status_message'=>'Liste des formations',
+            'data'=>$formation
+        ]);
     }
 
     /**

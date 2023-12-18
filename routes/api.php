@@ -22,8 +22,15 @@ use App\Http\Controllers\Api\FormationController;
 
 Route::post('register',[UserController::class,'register']);
 Route::post('login',[UserController::class,'login']);
-
+Route::get('listeFormations',[FormationController::class,'index']);
 //ADMIN
-Route::post('formation/create',[FormationController::class,'store']);
-Route::post('formation/update/{id}',[FormationController::class,'update']);
-Route::delete('formation/{id}',[FormationController::class,'destroy']);
+Route::middleware(['auth:api','admin'])->group(function(){
+    Route::post('formation/create',[FormationController::class,'store']);
+    Route::post('formation/update/{id}',[FormationController::class,'update']);
+    Route::delete('formation/{id}',[FormationController::class,'destroy']);
+});
+
+//CANDIDAT
+Route::middleware(['auth:api','candidat'])->group(function(){
+    
+});
