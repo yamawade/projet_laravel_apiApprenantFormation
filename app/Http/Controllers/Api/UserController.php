@@ -111,13 +111,28 @@ class UserController extends Controller
         }
 
         $user = Auth::user();
-        return response()->json([
-            'user' => $user,
-            'authorization' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
+        if($user->role ==='admin'){
+            return response()->json([
+                'message' => 'Salut Admin',
+                'user' => $user,
+                'authorization' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
+            ]);
+
+        }else{
+
+            return response()->json([
+                'message' => 'Salut Candidat',
+                'user' => $user,
+                'authorization' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
+            ]);
+        }
+       
     }
 
     public function logout()
