@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('formations', function (Blueprint $table) {
             $table->id();
             $table->string('nom_formation');
-            $table->date('date_formation');
-            $table->enum('statut'.['en_attente','en_cours','terminer'])->default('en_attente');
+            $table->text('description');
+            $table->date('duree');
+            $table->enum('statut',['en_attente','en_cours','terminer'])->default('en_attente');
             $table->timestamps();
         });
     }

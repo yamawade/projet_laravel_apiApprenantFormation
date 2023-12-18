@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -62,4 +65,67 @@ class UserController extends Controller
     {
         //
     }
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'date_naiss' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $user = User::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'date_naiss' => $request->date_naiss,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            'message' => 'Utilisateur créer avec succes',
+            'user' => $user
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        $credentials = $request->only('email', 'password');
+        $token = Auth::attempt($credentials);
+        
+        if (!$token) {
+            return response()->json([
+                'message' => 'Connexion echouer',
+            ], 401);
+        }
+
+        $user = Auth::user();
+        return response()->json([
+            'user' => $user,
+            'authorization' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return response()->json([
+            'message' => 'Déconnexion réussi',
+        ]);
+    }
+
 }
