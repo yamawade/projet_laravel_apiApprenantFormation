@@ -31,9 +31,13 @@ Route::middleware(['auth:api','admin'])->group(function(){
     Route::delete('formation/{id}',[FormationController::class,'destroy']);
     Route::post('accepterCandidature/{candidature}',[UtilisateurFormationController::class,'accepter_refuser_candidature']);
     Route::get('listeCandidatures',[UtilisateurFormationController::class,'index']);
+    Route::get('listeCandidaturesAccepter',[UtilisateurFormationController::class,'listeCandidaturesAccepter']);
+    Route::get('listeCandidaturesRefuser',[UtilisateurFormationController::class,'listeCandidaturesRefuser']);
+    Route::post('DeconnexionAdmin',[UserController::class,'logout']);
 });
 
 //CANDIDAT
 Route::middleware(['auth:api','candidat'])->group(function(){
     Route::post('candidater/create',[UtilisateurFormationController::class,'store']);
+    Route::post('DeconnexionCandidat',[UserController::class,'logout']);
 });

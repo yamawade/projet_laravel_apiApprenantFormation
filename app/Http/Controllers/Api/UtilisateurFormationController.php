@@ -22,6 +22,24 @@ class UtilisateurFormationController extends Controller
         ]);
     }
 
+    public function listeCandidaturesAccepter(){
+        $listeCandidatureAccepter = UtilisateurFormation::where('statut','accepter')->get();
+        return response()->json([
+            'status_code'=>200,
+            'status_message'=>'Liste des candidatures acceptés',
+            'data'=>$listeCandidatureAccepter
+        ]);
+    }
+
+    public function listeCandidaturesRefuser(){
+        $listeCandidatureRefuser = UtilisateurFormation::where('statut','refuser')->get();
+        return response()->json([
+            'status_code'=>200,
+            'status_message'=>'Liste des candidatures acceptés',
+            'data'=>$listeCandidatureRefuser
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
