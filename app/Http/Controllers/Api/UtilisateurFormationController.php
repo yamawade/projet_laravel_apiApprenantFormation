@@ -14,7 +14,12 @@ class UtilisateurFormationController extends Controller
      */
     public function index()
     {
-        //
+        $listeCandidatures = UtilisateurFormation::all();
+        return response()->json([
+            'status_code'=>200,
+            'status_message'=>'Liste des candidatures',
+            'data'=>$listeCandidatures
+        ]);
     }
 
     /**
