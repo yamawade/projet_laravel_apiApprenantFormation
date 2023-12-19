@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\UtilisateurFormation;
+use Illuminate\Support\Facades\Auth;
 
 class UtilisateurFormationController extends Controller
 {
@@ -28,7 +30,22 @@ class UtilisateurFormationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $user = Auth::user();
+            //dd($user->id);
+            $candidat = new UtilisateurFormation();
+            $candidat->user_id=$user->id;
+            $candidat->formation_id=$request->formation_id;
+            if($candidat->save()){
+                return response()->json([
+                    'status_code'=>200,
+                    'status_message'=>'La candidature a ete effectué',
+                    'data'=>$candidat
+                ]);
+            }
+        }catch(Exception $e){
+            return response()->json($e);
+        }
     }
 
     /**

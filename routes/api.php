@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FormationController;
+use App\Http\Controllers\Api\UtilisateurFormationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,5 @@ Route::middleware(['auth:api','admin'])->group(function(){
 
 //CANDIDAT
 Route::middleware(['auth:api','candidat'])->group(function(){
-    
+    Route::post('candidater/create',[UtilisateurFormationController::class,'store']);
 });
