@@ -71,6 +71,29 @@ class UserController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     operationId="registerUser",
+     *     tags={"Authentication"},
+     *     summary="Register a new user",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="nom", type="string"),
+     *                 @OA\Property(property="prenom", type="string"),
+     *                 @OA\Property(property="date_naiss", type="string", format="date"),
+     *                 @OA\Property(property="email", type="string", format="email"),
+     *                 @OA\Property(property="password", type="string", format="password"),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="User created successfully"),
+     *     @OA\Response(response=422, description="Validation error"),
+     * )
+    */
     public function register(Request $request)
     {
         $request->validate([
@@ -95,6 +118,39 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+ * @OA\Post(
+ *     path="/api/login",
+ *     operationId="loginUser",
+ *     tags={"Authentication"},
+ *     summary="User login",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 @OA\Property(property="email", type="string", format="email"),
+ *                 @OA\Property(property="password", type="string"),
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(response=200, description="Successful login",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Salut Admin"),
+ *             @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+ *             @OA\Property(property="authorization", type="object",
+ *                 @OA\Property(property="token", type="string", example="your_access_token"),
+ *                 @OA\Property(property="type", type="string", example="bearer"),
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(response=401, description="Failed login",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Connexion échouée"),
+ *         )
+ *     ),
+ * )
+ */
     public function login(Request $request)
     {
         $request->validate([
@@ -135,6 +191,25 @@ class UserController extends Controller
        
     }
 
+    /**
+ * @OA\Post(
+ *     path="/api/logout",
+ *     operationId="logoutUser",
+ *     tags={"Authentication"},
+ *     summary="User logout",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Response(response=200, description="Successful logout",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Déconnexion réussie"),
+ *         )
+ *     ),
+ *     @OA\Response(response=401, description="Unauthorized",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Unauthenticated"),
+ *         )
+ *     ),
+ * )
+ */
     public function logout()
     {
         Auth::logout();
