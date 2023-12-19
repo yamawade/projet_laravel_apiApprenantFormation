@@ -79,4 +79,27 @@ class UtilisateurFormationController extends Controller
     {
         //
     }
+
+    public function accepter_refuser_candidature(UtilisateurFormation $candidature){
+       // dd($candidature);
+        if($candidature->statut ==='accepter'){
+            $candidature->statut ='refuser';
+            if($candidature->save()){
+                return response()->json([
+                    'status_code'=>200,
+                    'status_message'=>'La candidature a ete refuser',
+                    'data'=>$candidature
+                ]);
+            }
+        }else{
+            $candidature->statut ='accepter';
+            if($candidature->save()){
+                return response()->json([
+                    'status_code'=>200,
+                    'status_message'=>'La candidature a ete accepter',
+                    'data'=>$candidature
+                ]);
+            }
+        }
+    }
 }

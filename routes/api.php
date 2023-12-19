@@ -29,6 +29,7 @@ Route::middleware(['auth:api','admin'])->group(function(){
     Route::post('formation/create',[FormationController::class,'store']);
     Route::post('formation/update/{id}',[FormationController::class,'update']);
     Route::delete('formation/{id}',[FormationController::class,'destroy']);
+    Route::post('accepterCandidature/{candidature}',[UtilisateurFormationController::class,'accepter_refuser_candidature']);
 });
 
 //CANDIDAT
