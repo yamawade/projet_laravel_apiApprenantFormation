@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateFormationRequest extends FormRequest
+class StoreUserFormation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class UpdateFormationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom_formation' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'duree' => 'required|integer',
+            'formation_id' => 'required',
         ];
     }
 
@@ -42,9 +40,7 @@ class UpdateFormationRequest extends FormRequest
 
     public function messages(){
         return[
-            'nom_formation.required'=>'Un nom doit etre fourni',
-            'description.required'=>'Une description doit etre fourni',
-            'duree.required'=>'Une duree doit etre fourni',
+            'formation_id.required'=>'Veuillez choisir une formation',
         ];
     }
 }

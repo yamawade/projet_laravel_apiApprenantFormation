@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreLogin;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRegister;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -94,16 +96,8 @@ class UserController extends Controller
      *     @OA\Response(response=422, description="Validation error"),
      * )
     */
-    public function register(Request $request)
+    public function register(StoreRegister $request)
     {
-        $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'date_naiss' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
         $user = User::create([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
@@ -151,7 +145,7 @@ class UserController extends Controller
  *     ),
  * )
  */
-    public function login(Request $request)
+    public function login(StoreLogin $request)
     {
         $request->validate([
             'email' => 'required|string|email',

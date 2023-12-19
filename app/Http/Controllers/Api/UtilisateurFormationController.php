@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\UtilisateurFormation;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreUserFormation;
 
 class UtilisateurFormationController extends Controller
 {
@@ -137,7 +138,7 @@ class UtilisateurFormationController extends Controller
  *     ),
  * )
  */
-    public function store(Request $request)
+    public function store(StoreUserFormation $request)
     {
         try{
             $user = Auth::user();

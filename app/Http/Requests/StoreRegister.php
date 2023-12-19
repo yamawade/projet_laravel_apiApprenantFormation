@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateFormationRequest extends FormRequest
+class StoreRegister extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,11 @@ class UpdateFormationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom_formation' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'duree' => 'required|integer',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'date_naiss' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
         ];
     }
 
@@ -42,9 +44,12 @@ class UpdateFormationRequest extends FormRequest
 
     public function messages(){
         return[
-            'nom_formation.required'=>'Un nom doit etre fourni',
-            'description.required'=>'Une description doit etre fourni',
-            'duree.required'=>'Une duree doit etre fourni',
+            'nom.required'=>'Un nom doit etre fourni',
+            'prenom.required'=>'Un prenom doit etre fourni',
+            'date_naiss.required'=>'Une date de naissance doit etre fourni',
+            'email.required'=>'Un email doit etre fourni',
+            'email.unique'=>'L\'adresse email existe deja',
+            'password.required'=>'Un mot de passe doit etre fourni',
         ];
     }
 }

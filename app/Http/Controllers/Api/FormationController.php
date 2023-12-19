@@ -6,6 +6,8 @@ use Exception;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreFormationRequest;
+use App\Http\Requests\UpdateFormationRequest;
 
 class FormationController extends Controller
 {
@@ -82,7 +84,7 @@ class FormationController extends Controller
  *     ),
  * )
  */
-    public function store(Request $request)
+    public function store(StoreFormationRequest $request)
     {
         try{
             $formation = new Formation();
@@ -165,7 +167,7 @@ class FormationController extends Controller
  *     ),
  * )
  */
-    public function update(Request $request,$id)
+    public function update(UpdateFormationRequest $request,$id)
     {
         try{
             $formation = Formation::FindorFail($id);
